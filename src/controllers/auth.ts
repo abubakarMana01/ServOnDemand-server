@@ -33,6 +33,7 @@ export const signupController = async (req: Request, res: Response) => {
   const hashedPassword = await bcryptjs.hash(password, salt);
 
   const user = await User.create({ firstName, lastName, email, password: hashedPassword });
+
   user.save();
 
   res.status(201).json({ data: user });
