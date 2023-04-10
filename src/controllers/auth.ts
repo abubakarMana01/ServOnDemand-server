@@ -1,7 +1,7 @@
+import jwt from "jsonwebtoken";
 import bcryptjs from "bcryptjs";
 import User, { validateLogin, validateSignup } from "@models/User";
 import { Request, Response } from "express";
-import jwt from "jsonwebtoken";
 
 export const loginController = async (req: Request, res: Response) => {
   const { email, password } = req.body;
