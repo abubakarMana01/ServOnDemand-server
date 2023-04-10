@@ -39,10 +39,6 @@ const User_1 = __importStar(require("@models/User"));
 const express_1 = require("express");
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const router = (0, express_1.Router)();
-router.get("/users", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const users = yield User_1.default.find();
-    res.json({ data: users });
-}));
 router.post("/signup", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { firstName, lastName, email, password } = req.body;
     const { error } = (0, User_1.validateSignup)(req.body);
@@ -56,5 +52,18 @@ router.post("/signup", (req, res) => __awaiter(void 0, void 0, void 0, function*
     const user = yield User_1.default.create({ firstName, lastName, email, password: hashedPassword });
     user.save();
     res.status(201).json({ data: user });
+}));
+router.post("/login", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { email, password } = req.body;
+    const { error } = (0, User_1.validateLogin)(req.body);
+    if (error)
+        return res.status(400).json({ error: { message: error.details[0].message } });
+    const user = yield User_1.default.findOne({ email }).select(["-updatedAt", "-createdAt"]);
+    if (!user)
+        return res.status(400).json({ error: { message: "User not found" } });
+    const passwordMatches = yield bcryptjs_1.default.compare(password, user.password);
+    if (!passwordMatches)
+        return res.status(400).json({ error: { message: "Invalid password" } });
+    res.status(200).json(user);
 }));
 exports.default = router;
