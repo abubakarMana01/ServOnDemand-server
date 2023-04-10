@@ -25,5 +25,6 @@ app.get("/healthz", (req, res) => {
     res.send("Server up and running...");
 });
 app.use("/auth", index_1.authRoutes);
+app.use("/users", index_1.usersRoutes);
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

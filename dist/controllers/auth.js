@@ -38,6 +38,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.signupController = exports.loginController = void 0;
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const User_1 = __importStar(require("@models/User"));
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const loginController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { email, password } = req.body;
     const { error } = (0, User_1.validateLogin)(req.body);
@@ -49,7 +50,8 @@ const loginController = (req, res) => __awaiter(void 0, void 0, void 0, function
     const passwordMatches = yield bcryptjs_1.default.compare(password, user.password);
     if (!passwordMatches)
         return res.status(400).json({ error: { message: "Invalid password" } });
-    res.status(200).json(user);
+    const token = jsonwebtoken_1.default.sign({ _id: user._id }, `${process.env.JWT_SECRET}`);
+    res.status(200).json({ token });
 });
 exports.loginController = loginController;
 const signupController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {

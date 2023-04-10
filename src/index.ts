@@ -4,7 +4,7 @@ import express, { Request, Response } from "express";
 import cors from "cors";
 import morgan from "morgan";
 import { config } from "dotenv";
-import { authRoutes } from "@routes/index";
+import { authRoutes, usersRoutes } from "@routes/index";
 
 config();
 const app = express();
@@ -25,6 +25,7 @@ app.get("/healthz", (req: Request, res: Response) => {
 });
 
 app.use("/auth", authRoutes);
+app.use("/users", usersRoutes);
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

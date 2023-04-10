@@ -1,6 +1,7 @@
 import bcryptjs from "bcryptjs";
 import User, { validateLogin, validateSignup } from "@models/User";
 import { Request, Response } from "express";
+import jwt from "jsonwebtoken";
 
 export const loginController = async (req: Request, res: Response) => {
   const { email, password } = req.body;
@@ -14,7 +15,9 @@ export const loginController = async (req: Request, res: Response) => {
   const passwordMatches = await bcryptjs.compare(password, user.password);
   if (!passwordMatches) return res.status(400).json({ error: { message: "Invalid password" } });
 
-  res.status(200).json(user);
+  const token = jwt.sign({ _id: user._id }, `${process.env.JWT_SECRET}`);
+
+  res.status(200).json({ token });
 };
 
 export const signupController = async (req: Request, res: Response) => {
