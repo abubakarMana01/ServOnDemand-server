@@ -1,7 +1,6 @@
-import User from "@models/User";
+import User, { validateSignup } from "@models/User";
 import { Router } from "express";
 import bcryptjs from "bcryptjs";
-import Joi from "joi";
 const router = Router();
 
 router.get("/users", async (req, res) => {
@@ -12,12 +11,11 @@ router.get("/users", async (req, res) => {
 router.post("/signup", async (req, res) => {
   const { firstName, lastName, email, password } = req.body;
 
-  const signupValidationSchema = Joi.object({
-    firstName: Joi.string().min(2).max(255).required().label("First name"),
-    lastName: Joi.string().min(2).max(255).required().label("Last name"),
-    email: Joi.string().email().required().label("Email"),
-    password: Joi.string().min(6).max(255).required().label("Password"),
-  });
+  const { error } = validateSignup(req.body);
+  if (error) return res.status(400).json({ error: { message: error?.details[0].message } });
+
+  const userExists = await User.findOne({ email });
+  if (userExists) return res.status(400).json({ error: { message: "User already exists." } });
 
   const salt = await bcryptjs.genSalt(10);
   const hashedPassword = await bcryptjs.hash(password, salt);
