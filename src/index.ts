@@ -16,9 +16,9 @@ app.use(express.json());
 mongoose
   .connect(`${process.env.MONGODB_URI}`)
   .then(() => {
-    console.log("Connected to MongoDB");
+    console.log("Connected to DB");
   })
-  .catch((err: unknown) => console.log("Could not connect to MongoDB...", err));
+  .catch((err: unknown) => console.log("Could not connect to DB...", err));
 
 app.get("/healthz", (req: Request, res: Response) => {
   res.send("Server up and running...");
