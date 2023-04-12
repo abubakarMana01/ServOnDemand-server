@@ -6,7 +6,6 @@ const serviceSchema = new mongoose.Schema(
     title: {
       type: String,
       required: true,
-      lowercase: true,
       minlength: 2,
       maxlength: 255,
       trim: true,
@@ -28,9 +27,9 @@ export default Service;
 
 export const validateAddService = (data: unknown) => {
   const schema = Joi.object({
-    title: Joi.string().min(3).max(255).required().label("Title"),
-    picture: Joi.string().min(3).max(1024).required().label("Picture"),
+    title: Joi.string().min(3).max(255).trim().required().label("Title"),
+    picture: Joi.string().min(3).max(1024).trim().required().label("Picture"),
   });
 
-  schema.validate(data);
+  return schema.validate(data);
 };

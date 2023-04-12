@@ -15,13 +15,13 @@ export const loginController = async (req: Request, res: Response) => {
   const passwordMatches = await bcryptjs.compare(password, user.password);
   if (!passwordMatches) return res.status(400).json({ error: { message: "Invalid password" } });
 
-  const token = jwt.sign({ _id: user._id }, `${process.env.JWT_SECRET}`);
+  const token = jwt.sign({ _id: user._id, isAdmin: user.isAdmin }, `${process.env.JWT_SECRET}`);
 
   res.status(200).json({ token });
 };
 
 export const signupController = async (req: Request, res: Response) => {
-  const { firstName, lastName, email, password } = req.body;
+  const { firstName, lastName, email, password, isAdmin } = req.body;
 
   const { error } = validateSignup(req.body);
   if (error) return res.status(400).json({ error: { message: error?.details[0].message } });
@@ -32,7 +32,7 @@ export const signupController = async (req: Request, res: Response) => {
   const salt = await bcryptjs.genSalt(10);
   const hashedPassword = await bcryptjs.hash(password, salt);
 
-  const user = await User.create({ firstName, lastName, email, password: hashedPassword });
+  const user = await User.create({ firstName, lastName, email, password: hashedPassword, isAdmin });
   user.save();
 
   res.status(201).json({ data: user });

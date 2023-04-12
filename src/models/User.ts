@@ -35,6 +35,10 @@ const userSchema = new mongoose.Schema(
       maxlength: 255,
       trim: true,
     },
+    isAdmin: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true },
 );
@@ -47,6 +51,7 @@ export const validateSignup = (data: unknown) => {
     lastName: Joi.string().min(2).max(255).required().label("Last name"),
     email: Joi.string().email().required().label("Email"),
     password: Joi.string().min(6).max(255).required().label("Password"),
+    isAdmin: Joi.boolean(),
   });
   return schema.validate(data);
 };

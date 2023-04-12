@@ -1,5 +1,5 @@
 import { getAllUsers, getUserInformation } from "@controllers/users";
-import verifyAuth from "@middlewares/verifyAuth";
+import { verifyAuth } from "@middlewares/index";
 import { Router } from "express";
 
 const router = Router();
