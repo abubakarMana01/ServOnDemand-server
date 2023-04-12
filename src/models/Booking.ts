@@ -8,13 +8,19 @@ const bookingSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     required: true,
   },
+  status: {
+    type: String,
+    enum: ["completed", "cancelled", "upcoming"],
+    default: "upcoming",
+  },
 });
 
 const Booking = mongoose.model("Booking", bookingSchema);
 
-export const validateBooking = (data: unknown) => {
+export const validateAddBooking = (data: unknown) => {
   const schema = Joi.object({
     serviceId: Joi.string().required().label("User ID"),
+    status: Joi.string().label("Status"),
   });
 
   return schema.validate(data);
