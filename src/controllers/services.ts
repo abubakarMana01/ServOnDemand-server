@@ -1,3 +1,4 @@
+import Booking from "@models/Booking";
 import Service, { validateAddService } from "@models/Service";
 import { Request, Response } from "express";
 
@@ -27,4 +28,10 @@ export const addMultipleServices = async (req: Request, res: Response) => {
   const savedServices = await Service.insertMany(services);
 
   return res.status(201).json({ data: savedServices });
+};
+
+export const getMostBookedServicesController = async (req: Request, res: Response) => {
+  const allBookings = await Booking.find();
+
+  res.status(200).json({ data: allBookings });
 };

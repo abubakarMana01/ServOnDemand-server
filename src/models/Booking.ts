@@ -1,19 +1,22 @@
 import Joi from "joi";
 import mongoose from "mongoose";
 
-const bookingSchema = new mongoose.Schema({
-  userId: mongoose.Schema.Types.ObjectId,
-  service: {
-    ref: "Service",
-    type: mongoose.Schema.Types.ObjectId,
-    required: true,
+const bookingSchema = new mongoose.Schema(
+  {
+    userId: mongoose.Schema.Types.ObjectId,
+    service: {
+      ref: "Service",
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+    },
+    status: {
+      type: String,
+      enum: ["completed", "cancelled", "upcoming"],
+      default: "upcoming",
+    },
   },
-  status: {
-    type: String,
-    enum: ["completed", "cancelled", "upcoming"],
-    default: "upcoming",
-  },
-});
+  { timestamps: true },
+);
 
 const Booking = mongoose.model("Booking", bookingSchema);
 
