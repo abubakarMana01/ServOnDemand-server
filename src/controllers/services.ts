@@ -4,7 +4,7 @@ import { Request, Response } from "express";
 
 export const getAllServicesController = async (req: Request, res: Response) => {
   const services = await Service.find();
-  return res.status(200).json(services);
+  return res.status(200).json({ data: services });
 };
 
 export const addServiceController = async (req: Request, res: Response) => {
@@ -49,6 +49,7 @@ export const getMostBookedServicesController = async (req: Request, res: Respons
     const service = await Service.findById(docs[i]._id);
 
     data.push({
+      _id: service?._id,
       title: service?.title,
       picture: service?.picture,
     });
