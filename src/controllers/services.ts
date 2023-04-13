@@ -31,7 +31,28 @@ export const addMultipleServices = async (req: Request, res: Response) => {
 };
 
 export const getMostBookedServicesController = async (req: Request, res: Response) => {
-  const allBookings = await Booking.find();
+  const docs = await Booking.aggregate([
+    {
+      $group: {
+        // Each `_id` must be unique, so if there are multiple
+        // documents with the same age, MongoDB will increment `count`.
+        _id: "$service",
+        count: { $sum: 1 },
+      },
+    },
+    { $sort: { count: -1 } },
+    { $limit: 5 },
+  ]);
 
-  res.status(200).json({ data: allBookings });
+  const data = [];
+  for (let i = 0; i < docs.length; i++) {
+    const service = await Service.findById(docs[i]._id);
+
+    data.push({
+      title: service?.title,
+      picture: service?.picture,
+    });
+  }
+
+  res.status(200).json({ data });
 };
