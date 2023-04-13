@@ -52,6 +52,7 @@ export const getMostBookedServicesController = async (req: Request, res: Respons
       _id: service?._id,
       title: service?.title,
       picture: service?.picture,
+      count: docs[i].count,
     });
   }
 
