@@ -10,6 +10,17 @@ export const getAllWorkersController = async (req: Request, res: Response) => {
   res.status(200).json({ data: workers });
 };
 
+export const getWorkersByServiceOffered = async (req: Request, res: Response) => {
+  const { serviceId } = req.params;
+
+  const serviceIdValid = isValidObjectId(serviceId);
+  if (!serviceIdValid) return res.status(400).json({ error: { message: "Invalid service ID" } });
+
+  const workers = await Worker.find({ "serviceOffered.service": serviceId });
+
+  res.status(200).json({ data: workers });
+};
+
 export const addWorkerController = async (req: Request, res: Response) => {
   const { email, password, serviceOffered } = req.body;
 
