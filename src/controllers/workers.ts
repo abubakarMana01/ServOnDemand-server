@@ -25,8 +25,6 @@ export const addWorkerController = async (req: Request, res: Response) => {
   const serviceExists = await Service.findById(serviceOffered.serviceId);
   if (!serviceExists) return res.status(404).json({ error: { message: "Service not found" } });
 
-  console.log(serviceExists);
-
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(password, salt);
 
