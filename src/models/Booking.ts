@@ -4,6 +4,11 @@ import mongoose from "mongoose";
 const bookingSchema = new mongoose.Schema(
   {
     userId: mongoose.Schema.Types.ObjectId,
+    worker: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Worker",
+      required: true,
+    },
     service: {
       ref: "Service",
       type: mongoose.Schema.Types.ObjectId,
@@ -23,6 +28,7 @@ const Booking = mongoose.model("Booking", bookingSchema);
 export const validateAddBooking = (data: unknown) => {
   const schema = Joi.object({
     serviceId: Joi.string().required().label("User ID"),
+    workerId: Joi.string().required().label("Worker ID"),
     status: Joi.string().label("Status"),
   });
 
