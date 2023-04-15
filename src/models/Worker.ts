@@ -1,3 +1,4 @@
+import Joi from "joi";
 import mongoose from "mongoose";
 
 const workerSchema = new mongoose.Schema(
@@ -17,6 +18,15 @@ const workerSchema = new mongoose.Schema(
       minlength: 2,
       maxlength: 255,
       lowercase: true,
+    },
+    email: {
+      type: String,
+      required: true,
+      lowercase: true,
+      minlength: 2,
+      maxlength: 255,
+      trim: true,
+      unique: true,
     },
     serviceOffered: {
       type: {
@@ -58,10 +68,46 @@ const workerSchema = new mongoose.Schema(
       },
       required: true,
     },
+    password: {
+      type: String,
+      required: true,
+      minlength: 6,
+      maxlength: 255,
+      trim: true,
+    },
   },
   { timestamps: true },
 );
 
 const Worker = mongoose.model("Worker", workerSchema);
+
+export const validateWorker = (data: unknown) => {
+  const schema = Joi.object({
+    firstName: Joi.string().trim().min(2).max(255).required().label("First name"),
+    lastName: Joi.string().trim().min(2).max(255).required().label("Last name"),
+    email: Joi.string().email().required().label("Email"),
+    password: Joi.string().trim().min(6).max(255).required().label("Password"),
+    chargePerHour: Joi.number().min(1).max(1_000_000).required().label("Charge Per Hour"),
+    serviceOffered: Joi.object({
+      description: Joi.string().trim().required().label("Service description"),
+      serviceId: Joi.string().trim().required().label("Service ID"),
+    })
+      .required()
+      .label("Service offered"),
+    location: Joi.object({
+      coordinates: Joi.object({
+        latitude: Joi.number().required().label("Latitude"),
+        longitude: Joi.number().required().label("Longitude"),
+      })
+        .required()
+        .label("Coordinates"),
+      address: Joi.string().trim().max(1000).required().label("Address"),
+    })
+      .required()
+      .label("Location"),
+  });
+
+  return schema.validate(data);
+};
 
 export default Worker;
