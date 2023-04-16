@@ -7,14 +7,16 @@ import mongoose from "mongoose";
 export const getBookingsController = async (req: Request, res: Response) => {
   const { _id } = req.user as { _id: string };
 
-  const bookings = await Booking.find({ userId: _id }).populate("service").sort({ createdAt: -1 });
+  const bookings = await Booking.find({ userId: _id }).populate("service worker").sort({ createdAt: -1 });
   res.status(200).json({ data: bookings });
 };
 
 export const getUpcomingBookingsController = async (req: Request, res: Response) => {
   const { _id } = req.user as { _id: string };
 
-  const bookings = await Booking.find({ userId: _id, status: "upcoming" }).populate("service").sort({ createdAt: -1 });
+  const bookings = await Booking.find({ userId: _id, status: "upcoming" })
+    .populate("service worker")
+    .sort({ createdAt: -1 });
   res.status(200).json({ data: bookings });
 };
 

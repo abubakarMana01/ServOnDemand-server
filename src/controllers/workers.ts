@@ -16,7 +16,7 @@ export const getWorkersByServiceOffered = async (req: Request, res: Response) =>
   const serviceIdValid = isValidObjectId(serviceId);
   if (!serviceIdValid) return res.status(400).json({ error: { message: "Invalid service ID" } });
 
-  const workers = await Worker.find({ "serviceOffered.service": serviceId });
+  const workers = await Worker.find({ "serviceOffered.service": serviceId }).populate("serviceOffered.service");
 
   res.status(200).json({ data: workers });
 };

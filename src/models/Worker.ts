@@ -43,6 +43,22 @@ const workerSchema = new mongoose.Schema(
       },
       required: true,
     },
+    ratings: {
+      type: {
+        count: {
+          type: Number,
+          required: true,
+        },
+        overallRatings: {
+          type: Number,
+          required: true,
+        },
+      },
+      default: {
+        count: 0,
+        overallRatings: 0,
+      },
+    },
     chargePerHour: {
       type: Number,
       required: true,
