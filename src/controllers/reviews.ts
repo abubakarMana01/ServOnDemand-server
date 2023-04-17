@@ -10,7 +10,7 @@ export const getHandymanReviewsController = async (req: Request, res: Response) 
 
   const reviews = await Review.find({ worker: workerId }).populate("customer worker");
 
-  res.status(200).json({ data: reviews });
+  res.status(200).json({ data: { reviews } });
 };
 
 export const addHandymanReviewController = async (req: Request, res: Response) => {
