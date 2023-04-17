@@ -3,13 +3,13 @@ import mongoose from "mongoose";
 
 const reviewSchema = new mongoose.Schema(
   {
-    customerId: {
+    customer: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
       trim: true,
     },
-    workerId: {
+    worker: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Worker",
       required: true,
@@ -23,8 +23,8 @@ const reviewSchema = new mongoose.Schema(
     },
     rating: {
       type: Number,
-      min: 0,
-      max: 0,
+      min: 1,
+      max: 5,
     },
   },
   { timestamps: true },
@@ -34,9 +34,9 @@ const Review = mongoose.model("Review", reviewSchema);
 
 export const validateReview = (data: unknown) => {
   const schema = Joi.object({
-    customerId: Joi.string().trim().required().label("Customer ID"),
     workerId: Joi.string().trim().required().label("Worker ID"),
     comment: Joi.string().max(1000).required().label("Comment"),
+    rating: Joi.number().min(1).max(5).required().label("Rating"),
   });
 
   return schema.validate(data);

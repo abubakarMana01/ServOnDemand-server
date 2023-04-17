@@ -4,7 +4,7 @@ import express, { Request, Response } from "express";
 import cors from "cors";
 import morgan from "morgan";
 import { config } from "dotenv";
-import { authRoutes, bookingsRoutes, servicesRoutes, usersRoutes, workersRoutes } from "@routes/index";
+import { authRoutes, bookingsRoutes, reviewsRoutes, servicesRoutes, usersRoutes, workersRoutes } from "@routes/index";
 
 config();
 const app = express();
@@ -29,6 +29,7 @@ app.use("/users", usersRoutes);
 app.use("/services", servicesRoutes);
 app.use("/bookings", bookingsRoutes);
 app.use("/workers", workersRoutes);
+app.use("/reviews", reviewsRoutes);
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
