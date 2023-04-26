@@ -27,6 +27,15 @@ export const getUpcomingBookingsController = async (req: Request, res: Response)
   res.status(200).json({ data: bookings });
 };
 
+export const getVendorUpcomingBookingsController = async (req: Request, res: Response) => {
+  const { _id } = req.user as { _id: string };
+
+  const bookings = await Booking.find({ worker: _id, status: "upcoming" })
+    .populate("service worker")
+    .sort({ createdAt: -1 });
+  res.status(200).json({ data: bookings });
+};
+
 export const addBookingController = async (req: Request, res: Response) => {
   const { serviceId, status, workerId } = req.body;
 

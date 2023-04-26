@@ -3,6 +3,7 @@ import {
   addBookingController,
   getBookingsController,
   getUpcomingBookingsController,
+  getVendorUpcomingBookingsController,
   getWorkersBookingsController,
 } from "@controllers/bookings";
 import verifyAuth from "@middlewares/verifyAuth";
@@ -20,6 +21,10 @@ router.get("/worker/all", verifyAuth, getWorkersBookingsController);
 // desc Get upcoming bookings for a user
 // @route /bookings/upcoming
 router.get("/upcoming", verifyAuth, getUpcomingBookingsController);
+
+// desc Get upcoming bookings for a user
+// @route /bookings/vemdor/upcoming
+router.get("/vendor/upcoming", verifyAuth, getVendorUpcomingBookingsController);
 
 // @desc Add a booking
 // @route /bookings/add
