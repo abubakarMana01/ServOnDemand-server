@@ -30,8 +30,8 @@ export const addHandymanReviewController = async (req: Request, res: Response) =
   if (!isCusomerIdValid || !isWorkerIdValid)
     return res.status(400).json({ error: { message: "Invalid customer or worker" } });
 
-  const updatedWorker = await Worker.findByIdAndUpdate(
-    workerId,
+  const updatedWorker = await Worker.updateOne(
+    { _id: workerId },
     {
       $inc: {
         "ratings.count": 1,
