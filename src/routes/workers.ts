@@ -1,6 +1,7 @@
 import {
   addWorkerController,
   getAllWorkersController,
+  getWorkerInformationController,
   getWorkersByServiceOfferedController,
 } from "@controllers/workers";
 import verifyAuth from "@middlewares/verifyAuth";
@@ -9,15 +10,19 @@ import { Router } from "express";
 const router = Router();
 
 // @desc Get all workers/service providers
-// /workers/all
+// @route /workers/all
 router.get("/all", verifyAuth, getAllWorkersController);
 
+// @desc Get worker information
+// @route /workers/me
+router.get("/all", verifyAuth, getWorkerInformationController);
+
 // @desc Get workers/service providers providing a specific service
-// /workers/:serviceId
+// @route /workers/:serviceId
 router.get("/:serviceId", verifyAuth, getWorkersByServiceOfferedController);
 
 // @desc Add a new worker to workers collection
-// /workers/add
+// @route /workers/add
 router.post("/add", verifyAuth, addWorkerController);
 
 export default router;
