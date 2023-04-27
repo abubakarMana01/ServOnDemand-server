@@ -12,7 +12,9 @@ export const getAllWorkersController = async (req: Request, res: Response) => {
 
 export const getWorkerInformationController = async (req: Request, res: Response) => {
   const { _id } = req.user as { _id: string };
-  const worker = await Worker.findOne({ _id }).select(["-password", "-updatedAt", "-createdAt"]);
+  const worker = await Worker.findOne({ _id })
+    .select(["-password", "-updatedAt", "-createdAt"])
+    .populate("serviceOffered.service");
 
   res.status(200).json({ data: worker });
 };
