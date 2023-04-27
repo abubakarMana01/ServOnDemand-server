@@ -1,6 +1,7 @@
 import { Router } from "express";
 import {
   addBookingController,
+  getAllVendorBookingsController,
   getBookingsController,
   getUpcomingBookingsController,
   getVendorUpcomingBookingsController,
@@ -22,8 +23,12 @@ router.get("/worker/all", verifyAuth, getWorkersBookingsController);
 // @route /bookings/upcoming
 router.get("/upcoming", verifyAuth, getUpcomingBookingsController);
 
+// desc Get all bookings for a vendor
+// @route /bookings/vendor/all
+router.get("/vendor/all", verifyAuth, getAllVendorBookingsController);
+
 // desc Get upcoming bookings for a user
-// @route /bookings/vemdor/upcoming
+// @route /bookings/vendor/upcoming
 router.get("/vendor/upcoming", verifyAuth, getVendorUpcomingBookingsController);
 
 // @desc Add a booking
