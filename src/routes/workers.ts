@@ -15,7 +15,7 @@ router.get("/all", verifyAuth, getAllWorkersController);
 
 // @desc Get worker information
 // @route /workers/me
-router.get("/all", verifyAuth, getWorkerInformationController);
+router.get("/me", verifyAuth, getWorkerInformationController);
 
 // @desc Get workers/service providers providing a specific service
 // @route /workers/:serviceId
