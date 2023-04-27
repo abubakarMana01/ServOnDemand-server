@@ -10,7 +10,14 @@ export const getAllWorkersController = async (req: Request, res: Response) => {
   res.status(200).json({ data: workers });
 };
 
-export const getWorkersByServiceOffered = async (req: Request, res: Response) => {
+export const getWorkerInformationController = async (req: Request, res: Response) => {
+  const { _id } = req.user as { _id: string };
+  const worker = await Worker.findOne({ _id }).select(["-password", "-updatedAt", "-createdAt"]);
+
+  res.status(200).json({ data: worker });
+};
+
+export const getWorkersByServiceOfferedController = async (req: Request, res: Response) => {
   const { serviceId } = req.params;
 
   const serviceIdValid = isValidObjectId(serviceId);

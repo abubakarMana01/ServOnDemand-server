@@ -1,4 +1,8 @@
-import { addWorkerController, getAllWorkersController, getWorkersByServiceOffered } from "@controllers/workers";
+import {
+  addWorkerController,
+  getAllWorkersController,
+  getWorkersByServiceOfferedController,
+} from "@controllers/workers";
 import verifyAuth from "@middlewares/verifyAuth";
 import { Router } from "express";
 
@@ -10,7 +14,7 @@ router.get("/all", verifyAuth, getAllWorkersController);
 
 // @desc Get workers/service providers providing a specific service
 // /workers/:serviceId
-router.get("/:serviceId", verifyAuth, getWorkersByServiceOffered);
+router.get("/:serviceId", verifyAuth, getWorkersByServiceOfferedController);
 
 // @desc Add a new worker to workers collection
 // /workers/add
