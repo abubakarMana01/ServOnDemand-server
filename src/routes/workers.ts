@@ -23,6 +23,6 @@ router.get("/:serviceId", verifyAuth, getWorkersByServiceOfferedController);
 
 // @desc Add a new worker to workers collection
 // @route /workers/add
-router.post("/add", verifyAuth, addWorkerController);
+router.post("/add", addWorkerController);
 
 export default router;
