@@ -11,7 +11,7 @@ const router = Router();
 
 // @desc Get all services registered on app
 // @route /services/all
-router.get("/all", verifyAuth, getAllServicesController);
+router.get("/all", getAllServicesController);
 
 // @desc Get the most booked services on the app
 // @route /services/most-booked
