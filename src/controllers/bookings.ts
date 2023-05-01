@@ -22,7 +22,7 @@ export const getUpcomingBookingsController = async (req: Request, res: Response)
   const { _id } = req.user as { _id: string };
 
   const bookings = await Booking.find({ userId: _id, status: "upcoming" })
-    .populate("service worker")
+    .populate("service worker userId")
     .sort({ createdAt: -1 });
   res.status(200).json({ data: bookings });
 };
