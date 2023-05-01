@@ -22,7 +22,7 @@ export const userLoginController = async (req: Request, res: Response) => {
 };
 
 export const userSignupController = async (req: Request, res: Response) => {
-  const { firstName, lastName, email, password, isAdmin } = req.body;
+  const { firstName, lastName, email, password, isAdmin, phoneNumber } = req.body;
 
   const { error } = validateSignup(req.body);
   if (error) return res.status(400).json({ error: { message: error?.details[0].message } });
@@ -33,7 +33,7 @@ export const userSignupController = async (req: Request, res: Response) => {
   const salt = await bcryptjs.genSalt(10);
   const hashedPassword = await bcryptjs.hash(password, salt);
 
-  const user = await User.create({ firstName, lastName, email, password: hashedPassword, isAdmin });
+  const user = await User.create({ firstName, lastName, email, phoneNumber, password: hashedPassword, isAdmin });
   user.save();
 
   res.status(201).json({ data: user });

@@ -28,6 +28,14 @@ const workerSchema = new mongoose.Schema(
       trim: true,
       unique: true,
     },
+    phoneNumber: {
+      type: String,
+      required: true,
+      minlength: 9,
+      maxlength: 11,
+      trim: true,
+      unique: true,
+    },
     serviceOffered: {
       type: {
         description: {
@@ -103,6 +111,11 @@ export const validateWorker = (data: unknown) => {
     lastName: Joi.string().trim().min(2).max(255).required().label("Last name"),
     email: Joi.string().email().required().label("Email"),
     password: Joi.string().trim().min(6).max(255).required().label("Password"),
+    phoneNumber: Joi.string()
+      .regex(/^[0-9]{11}$/)
+      .messages({ "string.pattern.base": `Phone number must be 11 digits.` })
+      .required()
+      .label("Phone number"),
     chargePerHour: Joi.number().min(1).max(1_000_000).required().label("Charge Per Hour"),
     serviceOffered: Joi.object({
       description: Joi.string().trim().required().label("Service description"),

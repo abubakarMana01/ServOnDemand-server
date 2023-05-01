@@ -28,6 +28,14 @@ const userSchema = new mongoose.Schema(
       trim: true,
       unique: true,
     },
+    phoneNumber: {
+      type: String,
+      required: true,
+      minlength: 9,
+      maxlength: 11,
+      trim: true,
+      unique: true,
+    },
     password: {
       type: String,
       required: true,
@@ -51,6 +59,11 @@ export const validateSignup = (data: unknown) => {
     lastName: Joi.string().min(2).max(255).required().label("Last name"),
     email: Joi.string().email().required().label("Email"),
     password: Joi.string().min(6).max(255).required().label("Password"),
+    phoneNumber: Joi.string()
+      .regex(/^[0-9]{11}$/)
+      .messages({ "string.pattern.base": `Phone number must be 11 digits.` })
+      .required()
+      .label("Phone number"),
     isAdmin: Joi.boolean(),
   });
   return schema.validate(data);

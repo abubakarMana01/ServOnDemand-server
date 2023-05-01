@@ -48,10 +48,10 @@ export const addWorkerController = async (req: Request, res: Response) => {
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(password, salt);
 
-  await Worker.create({
+  const worker = await Worker.create({
     ...req.body,
     password: hashedPassword,
     serviceOffered: { ...serviceOffered, service: serviceOffered.serviceId },
   });
-  res.status(201).json({ data: { message: "Worker created successfully" } });
+  res.status(201).json({ data: { message: "Worker created successfully", worker } });
 };
