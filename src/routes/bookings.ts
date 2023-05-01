@@ -11,23 +11,23 @@ import verifyAuth from "@middlewares/verifyAuth";
 
 const router = Router();
 
-// desc Get all bookings for a user
+// @desc Get all bookings for a user
 // @route /bookings/all
 router.get("/all", verifyAuth, getBookingsController);
 
-// desc Get all bookings for a worker
+// @desc Get all bookings for a worker
 // @route /bookings/worker/all
 router.get("/worker/all", verifyAuth, getWorkersBookingsController);
 
-// desc Get upcoming bookings for a user
+// @desc Get upcoming bookings for a user
 // @route /bookings/upcoming
 router.get("/upcoming", verifyAuth, getUpcomingBookingsController);
 
-// desc Get all bookings for a vendor
+// @desc Get all bookings for a vendor
 // @route /bookings/vendor/all
 router.get("/vendor/all", verifyAuth, getAllVendorBookingsController);
 
-// desc Get upcoming bookings for a user
+// @desc Get upcoming bookings for a user
 // @route /bookings/vendor/upcoming
 router.get("/vendor/upcoming", verifyAuth, getVendorUpcomingBookingsController);
 
