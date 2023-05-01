@@ -38,7 +38,7 @@ export const getVendorUpcomingBookingsController = async (req: Request, res: Res
   const { _id } = req.user as { _id: string };
 
   const bookings = await Booking.find({ worker: _id, status: "upcoming" })
-    .populate("service worker")
+    .populate("service worker userId")
     .sort({ createdAt: -1 });
   res.status(200).json({ data: bookings });
 };
