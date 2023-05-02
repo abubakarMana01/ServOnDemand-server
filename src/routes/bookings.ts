@@ -1,6 +1,7 @@
 import { Router } from "express";
 import {
   addBookingController,
+  deleteBookingController,
   getAllVendorBookingsController,
   getBookingsController,
   getUpcomingBookingsController,
@@ -34,5 +35,9 @@ router.get("/vendor/upcoming", verifyAuth, getVendorUpcomingBookingsController);
 // @desc Add a booking
 // @route /bookings/add
 router.post("/add", verifyAuth, addBookingController);
+
+// @desc Delete a booking
+// @route /bookings/delete/:_id
+router.delete("/delete/:_id", verifyAuth, deleteBookingController);
 
 export default router;

@@ -63,3 +63,10 @@ export const addBookingController = async (req: Request, res: Response) => {
 
   res.status(201).json({ data: booking });
 };
+
+export const deleteBookingController = async (req: Request, res: Response) => {
+  const { _id } = req.params;
+
+  await Booking.deleteOne({ _id });
+  res.status(200).json({ data: { message: "Deleted successfully." } });
+};
